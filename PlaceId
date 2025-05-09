@@ -15,8 +15,6 @@ end
 
 --// T-Titans Battlegrounds
 Nonchalant:LoadScript(1111698561, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds"))()')
-Nonchalant:LoadScript(7244157707, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/kitodoescode/EmberHub/refs/heads/main/script.lua"))()')
-Nonchalant:LoadScript(4523856444, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/scripter66/EmberHub/refs/heads/main/ColorOrDie.lua"))()')
 if found == false then
     print("[ Nonchalant Hub ] -> No script found for this game ❌")
     notif.Warn("Our script doesn't support this game.", "Nonchalant hub")
