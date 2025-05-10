@@ -1,14 +1,13 @@
-local KeySystem = loadstring(game:HttpGet("https://pastebin.com/raw/0gbThXyM"))()
+local KeySystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/OopssSorry/LuaU-Free-Key-System-UI/main/source.lua"))()
 local KeyValid = false
 local response = KeySystem:Init({
-	Debug=true, -- <bool> Prints some output in console when true
-	Title="Nonchalant Hub | Key System", -- <string or nil> Title of key system
+	Debug=false, -- <bool> Prints some output in console when true
+	Title="Nonchalant Hub | Key System 🔑", -- <string or nil> Title of key system
 	Description=nil, -- <string or nil> Description of key system
-	Link="https://pastebin.com/raw/SRrTsTPU", -- <string> String to get key
-	Discord="https://discord.gg/SXEYSVEjh3", -- <string or nil> Button to join your discord server
+	Link="https://discord.gg/SXEYSVEjh3", -- <string> String to get key
 	SaveKey=true, -- <bool or nil> Just auto save key
 	Verify=function(key) -- <function> Verify is key valid
-		if key=="Nonchalant" then
+		if key=="Nonchalant-7284" then
       KeyValid=true
 			return true
 		else
@@ -19,10 +18,4 @@ local response = KeySystem:Init({
 })
 
 if not response or not KeyValid then return end
-print("Checking if game is Supported..")
-local placeid = game.PlaceId
-if placeid == 116495829188952 then --// Dead Rails
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Dead%20Rails"))()
-elseif placeid == 3082002798 then --// T-Titans Battlegrounds
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Dead%20Rails"))()
-end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/GameLoader/refs/heads/main/PlaceId"))()
