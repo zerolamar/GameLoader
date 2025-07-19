@@ -1,22 +1,24 @@
-local Nonchalant = {}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/scripter66/NotificationSystem/refs/heads/main/Notification.lua"))()
-print("[ Nonchalant Hub ] -> Game ID:", game.GameId)
-local found = false
+-- 🔑 SCRIPTKEY check
+getgenv().SCRIPTKEY = getgenv().SCRIPTKEY or "ZORI-0"
+local hour = os.date("!*t").hour
+local validKey = "ZORI-" .. math.floor(hour / 2)
 
-function Nonchalant:LoadScript(gameId, script)
-    print("[ Nonchalant Hub ] -> Searching for a supported script...")
-    if game.GameId == gameId then
-        found = true
-        print("[ Nonchalant Hub ] -> Found a supported game ✅")
-        loadstring(script)()
-        
-    end
+if getgenv().SCRIPTKEY ~= validKey then
+    game.Players.LocalPlayer:Kick("❌ Invalid key. Check Discord for current key.")
+    return
 end
 
---// T-Titans Battlegrounds
-Nonchalant:LoadScript(1111698561, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds"))()')
-Nonchalant:LoadScript(1802741133, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Cabin%20Crew%20Simulator"))()')
-if found == false then
-    print("[ Nonchalant Hub ] -> No script found for this game ❌")
-    notif.Warn("Our script doesn't support this game.", "Nonchalant hub")
+-- 🧠 Game Place ID Logic
+local placeId = game.PlaceId
+
+local scriptMap = {
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/T-Titans%20Battlegrounds",      -- T-Titans Battlegrounds
+    [5171347293] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Cabin%20Crew%20Simulator -- Cabin Crew Simulator
+}
+
+-- 🎯 Execute if recognized game
+if scriptMap[placeId] then
+    loadstring(game:HttpGet(scriptMap[placeId]))()
+else
+    game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
 end
