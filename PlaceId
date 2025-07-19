@@ -1,4 +1,4 @@
--- 🔑 Optional SCRIPTKEY check (comment to skip)
+-- 🔑 SCRIPTKEY check (2-hour rotation)
 getgenv().SCRIPTKEY = getgenv().SCRIPTKEY or "ZORI-0"
 local hour = os.date("!*t").hour
 local validKey = "ZORI-" .. math.floor(hour / 2)
@@ -8,23 +8,30 @@ if getgenv().SCRIPTKEY ~= validKey then
     return
 end
 
--- 🧠 Game Place ID Logic
+-- 🧠 Game Place ID Logi
 local placeId = game.PlaceId
 
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua",
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds", -- T-Titans Battlegrounds
 }
 
-if scriptMap[placeId] then
+-- 🧪 Attempt to fetch and run the game-specific script
+local scriptURL = scriptMap[placeId]
+
+if scriptURL then
     local success, result = pcall(function()
-        return game:HttpGet(scriptMap[placeId])
+        return game:HttpGet(scriptURL)
     end)
 
-    if success then
-        loadstring(result)()
+    if success and result then
+        local execSuccess, err = pcall(loadstring(result))
+        if not execSuccess then
+            warn("⚠️ Script execution error:", err)
+            game.Players.LocalPlayer:Kick("❌ Script error: " .. tostring(err))
+        end
     else
-        warn("🚫 Failed to load script:", result)
-        game.Players.LocalPlayer:Kick("❌ Error loading script. Check GitHub link.")
+        warn("🚫 Failed to fetch script:", result)
+        game.Players.LocalPlayer:Kick("❌ Could not load remote script.")
     end
 else
     game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
