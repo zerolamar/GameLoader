@@ -19,6 +19,7 @@ local scriptMap = {
 if scriptMap[placeId] then
     local success, result = pcall(function()
         return game:HttpGet(scriptMap[placeId])
+        print("Trying to load:", scriptMap[placeId])
     end)
 
     if success then
