@@ -1,22 +1,14 @@
-local Nonchalant = {}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/scripter66/NotificationSystem/refs/heads/main/Notification.lua"))()
-print("[ Nonchalant Hub ] -> Game ID:", game.GameId)
-local found = false
+local key = getgenv().SCRIPTKEY
+local validKey = "ZORI-2025"
 
-function Nonchalant:LoadScript(gameId, script)
-    print("[ Nonchalant Hub ] -> Searching for a supported script...")
-    if game.GameId == gameId then
-        found = true
-        print("[ Nonchalant Hub ] -> Found a supported game ✅")
-        loadstring(script)()
-        
-    end
-end
-
---// T-Titans Battlegrounds
-Nonchalant:LoadScript(1111698561, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds"))()')
-Nonchalant:LoadScript(1802741133, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Cabin%20Crew%20Simulator"))()')
-if found == false then
-    print("[ Nonchalant Hub ] -> No script found for this game ❌")
-    notif.Warn("Our script doesn't support this game.", "Nonchalant hub")
+if key == validKey then
+    print("✅ Key valid, loading script...")
+    if placeid == 1111698561 then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds"))
+else
+   if placeid == 1802741133 then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Cabin%20Crew%20Simulator"))
+else
+    warn("❌ Invalid key!")
+    game.Players.LocalPlayer:Kick("Invalid Key. Join our Discord for access.")
 end
