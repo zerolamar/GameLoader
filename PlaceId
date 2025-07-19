@@ -13,7 +13,6 @@ local placeId = game.PlaceId
 
 local scriptMap = {
     [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans
-    [5171347293] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/Cabin%20Crew%20Simulator.lua", -- Cabin Crew
 }
 
 -- 🎯 Execute if recognized game
