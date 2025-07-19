@@ -8,14 +8,14 @@ if getgenv().SCRIPTKEY ~= validKey then
     return
 end
 
--- 🧠 Game Place ID Logi
+-- 🧠 Game Place ID Logic
 local placeId = game.PlaceId
 
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds", -- T-Titans Battlegrounds
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans
 }
 
--- 🧪 Attempt to fetch and run the game-specific script
+-- 🎯 Attempt to fetch and execute the remote script
 local scriptURL = scriptMap[placeId]
 
 if scriptURL then
@@ -24,14 +24,20 @@ if scriptURL then
     end)
 
     if success and result then
-        local execSuccess, err = pcall(loadstring(result))
-        if not execSuccess then
-            warn("⚠️ Script execution error:", err)
-            game.Players.LocalPlayer:Kick("❌ Script error: " .. tostring(err))
+        local func, loadErr = loadstring(result)
+        if func then
+            local execSuccess, execErr = pcall(func)
+            if not execSuccess then
+                warn("❌ Script Runtime Error: ", execErr)
+                game.Players.LocalPlayer:Kick("❌ Error while running script: " .. tostring(execErr))
+            end
+        else
+            warn("❌ loadstring error: ", loadErr)
+            game.Players.LocalPlayer:Kick("❌ Script loading failed. Check GitHub formatting.")
         end
     else
-        warn("🚫 Failed to fetch script:", result)
-        game.Players.LocalPlayer:Kick("❌ Could not load remote script.")
+        warn("❌ HTTP error: ", result)
+        game.Players.LocalPlayer:Kick("❌ Failed to fetch remote script. Check GitHub URL.")
     end
 else
     game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
