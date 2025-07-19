@@ -12,10 +12,9 @@ end
 local placeId = game.PlaceId
 
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/T-Titans%20Battlegrounds", -- T-Titans Battlegrounds
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua",
 }
 
--- 🎯 Execute if recognized game
 if scriptMap[placeId] then
     local success, result = pcall(function()
         return game:HttpGet(scriptMap[placeId])
