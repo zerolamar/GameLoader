@@ -1,4 +1,4 @@
--- 🔑 SCRIPTKEY check
+-- 🔑 SCRIPTKEY check (2-hour rotation)
 getgenv().SCRIPTKEY = getgenv().SCRIPTKEY or "ZORI-0"
 local hour = os.date("!*t").hour
 local validKey = "ZORI-" .. math.floor(hour / 2)
@@ -12,8 +12,8 @@ end
 local placeId = game.PlaceId
 
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/T-Titans%20Battlegrounds",      -- T-Titans Battlegrounds
-    [5171347293] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/Cabin%20Crew%20Simulator -- Cabin Crew Simulator
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans
+    [5171347293] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/Cabin%20Crew%20Simulator.lua", -- Cabin Crew
 }
 
 -- 🎯 Execute if recognized game
