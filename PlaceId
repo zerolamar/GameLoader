@@ -1,4 +1,4 @@
--- 🔑 SCRIPTKEY check (2-hour rotation)
+-- 🔑 Optional SCRIPTKEY check (comment to skip)
 getgenv().SCRIPTKEY = getgenv().SCRIPTKEY or "ZORI-0"
 local hour = os.date("!*t").hour
 local validKey = "ZORI-" .. math.floor(hour / 2)
@@ -12,12 +12,21 @@ end
 local placeId = game.PlaceId
 
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/refs/heads/main/T-Titans%20Battlegrounds", -- T-Titans Battlegrounds
 }
 
 -- 🎯 Execute if recognized game
 if scriptMap[placeId] then
-    loadstring(game:HttpGet(scriptMap[placeId]))()
+    local success, result = pcall(function()
+        return game:HttpGet(scriptMap[placeId])
+    end)
+
+    if success then
+        loadstring(result)()
+    else
+        warn("🚫 Failed to load script:", result)
+        game.Players.LocalPlayer:Kick("❌ Error loading script. Check GitHub link.")
+    end
 else
     game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
 end
