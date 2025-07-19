@@ -8,37 +8,38 @@ if getgenv().SCRIPTKEY ~= validKey then
     return
 end
 
--- 🧠 Game Place ID Logic
+-- 🧠 Game Place ID and script mapping
 local placeId = game.PlaceId
-
 local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans
+    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans Battlegrounds
 }
 
--- 🎯 Attempt to fetch and execute the remote script
+-- 🎯 Load the correct script
 local scriptURL = scriptMap[placeId]
 
-if scriptURL then
-    local success, result = pcall(function()
-        return game:HttpGet(scriptURL)
-    end)
-
-    if success and result then
-        local func, loadErr = loadstring(result)
-        if func then
-            local execSuccess, execErr = pcall(func)
-            if not execSuccess then
-                warn("❌ Script Runtime Error: ", execErr)
-                game.Players.LocalPlayer:Kick("❌ Error while running script: " .. tostring(execErr))
-            end
-        else
-            warn("❌ loadstring error: ", loadErr)
-            game.Players.LocalPlayer:Kick("❌ Script loading failed. Check GitHub formatting.")
-        end
-    else
-        warn("❌ HTTP error: ", result)
-        game.Players.LocalPlayer:Kick("❌ Failed to fetch remote script. Check GitHub URL.")
-    end
-else
+if not scriptURL then
     game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
+    return
+end
+
+-- 🧪 Fetch and run script safely
+local response, fetchErr = pcall(function()
+    return game:HttpGet(scriptURL)
+end)
+
+if not response or not fetchErr or fetchErr:match("404") then
+    game.Players.LocalPlayer:Kick("❌ Script not found or GitHub returned error.")
+    return
+end
+
+local loadedFunc, loadErr = loadstring(fetchErr)
+if not loadedFunc then
+    game.Players.LocalPlayer:Kick("❌ Script has syntax error. Fix your .lua file.")
+    return
+end
+
+-- ✅ Run the loaded script
+local success, execErr = pcall(loadedFunc)
+if not success then
+    game.Players.LocalPlayer:Kick("❌ Runtime error: " .. tostring(execErr))
 end
