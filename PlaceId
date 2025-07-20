@@ -4,42 +4,30 @@ local hour = os.date("!*t").hour
 local validKey = "ZORI-" .. math.floor(hour / 2)
 
 if getgenv().SCRIPTKEY ~= validKey then
-    game.Players.LocalPlayer:Kick("❌ Invalid key. Check Discord for current key.")
+    game.Players.LocalPlayer:Kick("❌ Invalid key. Check Discord for the current key.")
     return
 end
 
--- 🧠 Game Place ID and script mapping
+-- 🧠 Game Place ID Logic
 local placeId = game.PlaceId
-local scriptMap = {
-    [3082002798] = "https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds.lua", -- T-Titans Battlegrounds
-}
 
--- 🎯 Load the correct script
-local scriptURL = scriptMap[placeId]
+if placeId == 3082002798 then
+    -- 🧪 Load & run T-Titans Battlegrounds script
+    local success, result = pcall(function()
+        return game:HttpGet("https://raw.githubusercontent.com/zerolamar/Obfuscate-Scripts/main/T-Titans%20Battlegrounds")
+    end)
 
-if not scriptURL then
-    game.Players.LocalPlayer:Kick("⚠️ Unsupported game. Script will not run here.")
-    return
-end
+    if success then
+        local loaded, err = loadstring(result)
+        if loaded then
+            pcall(loaded)
+        else
+            game.Players.LocalPlayer:Kick("❌ Script error: " .. tostring(err))
+        end
+    else
+        game.Players.LocalPlayer:Kick("❌ Failed to fetch script.")
+    end
 
--- 🧪 Fetch and run script safely
-local response, fetchErr = pcall(function()
-    return game:HttpGet(scriptURL)
-end)
-
-if not response or not fetchErr or fetchErr:match("404") then
-    game.Players.LocalPlayer:Kick("❌ Script not found or GitHub returned error.")
-    return
-end
-
-local loadedFunc, loadErr = loadstring(fetchErr)
-if not loadedFunc then
-    game.Players.LocalPlayer:Kick("❌ Script has syntax error. Fix your .lua file.")
-    return
-end
-
--- ✅ Run the loaded script
-local success, execErr = pcall(loadedFunc)
-if not success then
-    game.Players.LocalPlayer:Kick("❌ Runtime error: " .. tostring(execErr))
+else
+    game.Players.LocalPlayer:Kick("⚠️ This game is not supported.")
 end
